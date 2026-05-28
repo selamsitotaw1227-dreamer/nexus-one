@@ -1,0 +1,165 @@
+body{
+    margin:0;
+    padding:0;
+    background:#0f172a;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+.login-box{
+    background:#1e293b;
+    padding:40px;
+    width:320px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:8px;
+    background:#3b82f6;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2563eb;
+}
+
+#message{
+    margin-top:15px;
+}
+.dashboard{
+    width:90%;
+    margin:auto;
+    text-align:center;
+}
+
+.cards{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    margin-top:40px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:#1e293b;
+    padding:30px;
+    width:200px;
+    border-radius:15px;
+}
+.form-box{
+    margin-top:40px;
+}
+
+.form-box input{
+    width:250px;
+    margin:10px;
+}
+
+table{
+    width:80%;
+    margin:auto;
+    margin-top:40px;
+    border-collapse:collapse;
+    background:#1e293b;
+}
+
+th, td{
+    padding:15px;
+    border:1px solid #334155;
+}
+
+th{
+    background:#3b82f6;
+}
+
+.delete-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+#search{
+    width:300px;
+    padding:12px;
+    margin-top:30px;
+    border:none;
+    border-radius:8px;
+}
+.light-mode{
+    background:white;
+    color:black;
+}
+
+.light-mode .card,
+.light-mode table,
+.light-mode .login-box{
+    background:#e2e8f0;
+    color:black;
+}
+
+#darkBtn{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:20px;
+}
+@media(max-width:768px){
+
+    .cards{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    table{
+        width:100%;
+    }
+
+    .form-box input{
+        width:90%;
+    }
+
+    #search{
+        width:90%;
+    }
+
+}
+.chart-container{
+    width:80%;
+    margin:auto;
+    margin-top:40px;
+}
+
+.bar{
+    height:40px;
+    background:#3b82f6;
+    width:70%;
+    color:white;
+    display:flex;
+    align-items:center;
+    padding-left:10px;
+    border-radius:8px;
+}
