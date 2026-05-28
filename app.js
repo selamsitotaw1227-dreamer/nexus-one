@@ -1,7 +1,7 @@
-let employees = JSON.parse(localStorage.getItem("employees")) || [];
+let employees = [];
 
 /* ---------------- INIT ---------------- */
-displayEmployees();
+loadEmployees();
 
 /* ---------------- INIT PASSWORD DEFAULT ---------------- */
 if (!localStorage.getItem("password")) {
@@ -10,7 +10,27 @@ if (!localStorage.getItem("password")) {
 
 /* ---------------- LOGIN ---------------- */
 function login(){
+function loadEmployees(){
 
+    employees = [];
+
+    db.collection("employees").get().then((snapshot)=>{
+
+        snapshot.forEach((doc)=>{
+
+            employees.push({
+                id: doc.id,
+                ...doc.data()
+            });
+
+        });
+
+        displayEmployees();
+
+    });
+
+}
+   
     let email = document.getElementById("email");
     let password = document.getElementById("password");
 
@@ -29,27 +49,28 @@ function login(){
 /* ---------------- ADD EMPLOYEE ---------------- */
 function addEmployee(){
 
-    let name = document.getElementById("empName");
-    let dept = document.getElementById("empDept");
+    let name = document.getElementById("empName").value;
+    let dept = document.getElementById("empDept").value;
 
-    if(!name || !dept) return;
-
-    if(name.value.trim() === "" || dept.value.trim() === ""){
+    if(name === "" || dept === ""){
         alert("Please fill all fields");
         return;
     }
 
-    employees.push({
-        name: name.value.trim(),
-        dept: dept.value.trim()
+    db.collection("employees").add({
+
+        name: name,
+        dept: dept
+
+    }).then(()=>{
+
+        loadEmployees();
+
+        document.getElementById("empName").value = "";
+        document.getElementById("empDept").value = "";
+
     });
 
-    localStorage.setItem("employees", JSON.stringify(employees));
-
-    name.value = "";
-    dept.value = "";
-
-    displayEmployees();
 }
 
 /* ---------------- DISPLAY ---------------- */
@@ -68,7 +89,7 @@ function displayEmployees(){
             <td>${emp.dept}</td>
             <td>
                 <button onclick="editEmployee(${index})">Edit</button>
-                <button onclick="deleteEmployee(${index})">Delete</button>
+                onclick="deleteEmployee('${emp.id}')"
             </td>
         </tr>
         `;
@@ -87,13 +108,15 @@ function displayEmployees(){
 }
 
 /* ---------------- DELETE ---------------- */
-function deleteEmployee(index){
+function deleteEmployee(id){
 
-    employees.splice(index, 1);
+    db.collection("employees").doc(id).delete()
+    .then(()=>{
 
-    localStorage.setItem("employees", JSON.stringify(employees));
+        loadEmployees();
 
-    displayEmployees();
+    });
+
 }
 
 /* ---------------- SEARCH ---------------- */
