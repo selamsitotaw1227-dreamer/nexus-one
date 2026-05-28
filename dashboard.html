@@ -5,60 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+<div class="dashboard-container">
 
-<div class="dashboard">
+    <!-- HEADER -->
+    <header class="header">
 
-    <button onclick="toggleDarkMode()" id="darkBtn">
-🌙 Dark Mode
-</button>
-<button onclick="logout()">Logout</button>
-    <h1>Employee Dashboard</h1>
-
-    <div class="cards">
-
-        <div class="card">
-            <h2 id="totalEmployees">0</h2>
-            <p>Total Employees</p>
+        <div>
+            <h1>⚡ Nexus One Dashboard</h1>
+            <p>Employee Management System</p>
         </div>
 
-        <div class="card">
-          <h2 id="totalDepartments">0</h2>
+        <div class="header-actions">
+
+            <span id="statusBadge">🟢 System Active</span>
+
+            <button onclick="toggleDarkMode()">🌙</button>
+            <button onclick="changePassword()">🔑</button>
+            <button onclick="logout()">🚪</button>
+
+        </div>
+
+    </header>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="stat-card">
+            <h2 id="totalEmployees">0</h2>
+            <p>Employees</p>
+        </div>
+
+        <div class="stat-card">
+            <h2 id="totalDepartments">0</h2>
             <p>Departments</p>
         </div>
 
-        <div class="card">
+        <div class="stat-card">
             <h2 id="activeStaff">0</h2>
             <p>Active Staff</p>
         </div>
-        <div class="chart-container">
-
-    <h2>System Analytics</h2>
-
-    <div class="bar employees-bar">
-        Employees
-    </div>
-
-</div>
 
     </div>
 
-    <input type="text"
-id="search"
-placeholder="Search Employee"
-onkeyup="searchEmployee()">
+    <!-- SEARCH -->
+    <input type="text" id="search"
+    placeholder="🔍 Search employee..."
+    onkeyup="searchEmployee()">
 
+    <!-- FORM -->
     <div class="form-box">
 
         <input type="text" id="empName" placeholder="Employee Name">
-
         <input type="text" id="empDept" placeholder="Department">
 
-        <button onclick="addEmployee()">Add Employee</button>
+        <button onclick="addEmployee()">+ Add Employee</button>
 
     </div>
 
+    <!-- TABLE -->
     <table>
 
         <thead>
@@ -69,15 +76,11 @@ onkeyup="searchEmployee()">
             </tr>
         </thead>
 
-        <tbody id="employeeList">
-
-        </tbody>
+        <tbody id="employeeList"></tbody>
 
     </table>
 
 </div>
-
 <script src="app.js"></script>
-
 </body>
 </html>

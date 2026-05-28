@@ -2,12 +2,16 @@ let employees = JSON.parse(localStorage.getItem("employees")) || [];
 
 displayEmployees();
 
+/* ---------------- LOGIN ---------------- */
+
 function login(){
 
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
-    if(email === "admin@gmail.com" && password === "123456"){
+    let savedPassword = localStorage.getItem("password") || "123456";
+
+    if(email === "admin@gmail.com" && password === savedPassword){
 
         window.location.href = "dashboard.html";
 
@@ -17,8 +21,9 @@ function login(){
         "Invalid Email or Password";
 
     }
-
 }
+
+/* ---------------- EMPLOYEE CRUD ---------------- */
 
 function addEmployee(){
 
@@ -30,12 +35,7 @@ function addEmployee(){
         return;
     }
 
-    let employee = {
-        name:name,
-        dept:dept
-    };
-
-    employees.push(employee);
+    employees.push({name, dept});
 
     localStorage.setItem("employees", JSON.stringify(employees));
 
@@ -61,31 +61,32 @@ function displayEmployees(){
             <td>${emp.dept}</td>
             <td>
 
-<button onclick="editEmployee(${index})">
-Edit
-</button>
+                <button onclick="editEmployee(${index})">Edit</button>
 
-<button class="delete-btn"
-onclick="deleteEmployee(${index})">
-Delete
-</button>
+                <button class="delete-btn"
+                onclick="deleteEmployee(${index})">
+                Delete
+                </button>
 
-</td>
+            </td>
         </tr>
         `;
     });
 
     document.getElementById("totalEmployees").innerHTML =
-employees.length;
+    employees.length;
 
-let departments = [...new Set(employees.map(emp => emp.dept))];
+    let departments = [...new Set(employees.map(emp => emp.dept))];
 
-document.getElementById("totalDepartments").innerHTML =
-departments.length;
+    document.getElementById("totalDepartments").innerHTML =
+    departments.length;
+
+    document.getElementById("activeStaff").innerHTML =
+    employees.length;
 }
 
-document.getElementById("activeStaff").innerHTML =
-employees.length;
+/* ---------------- DELETE ---------------- */
+
 function deleteEmployee(index){
 
     employees.splice(index,1);
@@ -94,6 +95,9 @@ function deleteEmployee(index){
 
     displayEmployees();
 }
+
+/* ---------------- SEARCH ---------------- */
+
 function searchEmployee(){
 
     let input =
@@ -107,45 +111,47 @@ function searchEmployee(){
         let name =
         row.children[0].textContent.toLowerCase();
 
-        if(name.includes(input)){
-            row.style.display = "";
-        }else{
-            row.style.display = "none";
-        }
+        row.style.display =
+        name.includes(input) ? "" : "none";
 
     });
 
 }
+
+/* ---------------- UI FEATURES ---------------- */
+
 function toggleDarkMode(){
-
     document.body.classList.toggle("light-mode");
-
 }
+
 function editEmployee(index){
 
-    let newName =
-    prompt("Enter new employee name");
-
-    let newDept =
-    prompt("Enter new department");
+    let newName = prompt("Enter new employee name");
+    let newDept = prompt("Enter new department");
 
     if(newName && newDept){
 
-        employees[index].name = newName;
-        employees[index].dept = newDept;
+        employees[index] = {
+            name: newName,
+            dept: newDept
+        };
 
-        localStorage.setItem(
-            "employees",
-            JSON.stringify(employees)
-        );
+        localStorage.setItem("employees", JSON.stringify(employees));
 
         displayEmployees();
-
     }
-
 }
+
 function logout(){
-
     window.location.href = "index.html";
+}
 
+function changePassword(){
+
+    let newPass = prompt("Enter new password:");
+
+    if(newPass){
+        localStorage.setItem("password", newPass);
+        alert("Password updated successfully!");
+    }
 }

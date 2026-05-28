@@ -1,15 +1,15 @@
+h1{
+    text-shadow:0 0 10px rgba(59,130,246,0.8);
+}
 body{
     margin:0;
     padding:0;
-    background:#0f172a;
+    background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
     font-family:Arial;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
     color:white;
+    min-height:100vh;
+    animation:fadeIn 1s ease;
 }
-
 .login-box{
     background:#1e293b;
     padding:40px;
@@ -29,19 +29,21 @@ input{
 }
 
 button{
-    width:100%;
-    padding:12px;
-    margin-top:20px;
+    padding:12px 20px;
+    margin-top:15px;
     border:none;
-    border-radius:8px;
-    background:#3b82f6;
+    border-radius:10px;
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
     color:white;
-    font-size:16px;
     cursor:pointer;
+    transition:0.3s;
+    font-size:15px;
+    font-weight:bold;
 }
 
 button:hover{
-    background:#2563eb;
+    transform:scale(1.05);
+    opacity:0.9;
 }
 
 #message{
@@ -62,10 +64,16 @@ button:hover{
 }
 
 .card{
-    background:#1e293b;
+    background:rgba(30,41,59,0.9);
     padding:30px;
     width:200px;
-    border-radius:15px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    transition:0.3s;
+}
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
 }
 .form-box{
     margin-top:40px;
@@ -81,7 +89,10 @@ table{
     margin:auto;
     margin-top:40px;
     border-collapse:collapse;
-    background:#1e293b;
+    background:rgba(30,41,59,0.9);
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
 th, td{
@@ -162,4 +173,155 @@ th{
     align-items:center;
     padding-left:10px;
     border-radius:8px;
+}
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:90%;
+    margin:auto;
+    flex-wrap:wrap;
+}
+
+.top-buttons button{
+    margin:5px;
+}
+.top-bar{
+    width:90%;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+}
+
+.top-buttons button{
+    margin-left:10px;
+}
+#statusBadge{
+    background:#22c55e;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+
+/* MAIN CONTAINER */
+.dashboard-container{
+    width:90%;
+    margin:auto;
+    padding:20px;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    background:#1e293b;
+    border-radius:15px;
+}
+
+.header h1{
+    margin:0;
+}
+
+.header-actions button{
+    margin-left:8px;
+    padding:8px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* STATUS BADGE */
+#statusBadge{
+    background:#22c55e;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.stat-card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-5px);
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:10px;
+}
+
+/* FORM */
+.form-box{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.form-box input{
+    flex:1;
+}
+
+/* BUTTON */
+button{
+    background:#3b82f6;
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* TABLE */
+table{
+    width:100%;
+    margin-top:20px;
+    background:#1e293b;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th, td{
+    padding:12px;
+    text-align:center;
 }
