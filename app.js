@@ -3,15 +3,22 @@ let employees = JSON.parse(localStorage.getItem("employees")) || [];
 /* ---------------- INIT ---------------- */
 displayEmployees();
 
+/* ---------------- INIT PASSWORD DEFAULT ---------------- */
+if (!localStorage.getItem("password")) {
+    localStorage.setItem("password", "123456");
+}
+
 /* ---------------- LOGIN ---------------- */
 function login(){
 
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
 
-    let savedPassword = localStorage.getItem("password") || "123456";
+    if(!email || !password) return;
 
-    if(email === "admin@gmail.com" && password === savedPassword){
+    let savedPassword = localStorage.getItem("password");
+
+    if(email.value === "admin@gmail.com" && password.value === savedPassword){
         window.location.href = "dashboard.html";
     }else{
         let msg = document.getElementById("message");
@@ -27,14 +34,14 @@ function addEmployee(){
 
     if(!name || !dept) return;
 
-    if(name.value === "" || dept.value === ""){
+    if(name.value.trim() === "" || dept.value.trim() === ""){
         alert("Please fill all fields");
         return;
     }
 
     employees.push({
-        name: name.value,
-        dept: dept.value
+        name: name.value.trim(),
+        dept: dept.value.trim()
     });
 
     localStorage.setItem("employees", JSON.stringify(employees));
@@ -49,7 +56,6 @@ function addEmployee(){
 function displayEmployees(){
 
     let list = document.getElementById("employeeList");
-
     if(!list) return;
 
     list.innerHTML = "";
@@ -94,7 +100,6 @@ function deleteEmployee(index){
 function searchEmployee(){
 
     let input = document.getElementById("search");
-
     if(!input) return;
 
     let filter = input.value.toLowerCase();
@@ -104,7 +109,6 @@ function searchEmployee(){
     rows.forEach(row => {
 
         let name = row.children[0].textContent.toLowerCase();
-
         row.style.display = name.includes(filter) ? "" : "none";
 
     });
@@ -118,8 +122,8 @@ function editEmployee(index){
 
     if(newName && newDept){
 
-        employees[index].name = newName;
-        employees[index].dept = newDept;
+        employees[index].name = newName.trim();
+        employees[index].dept = newDept.trim();
 
         localStorage.setItem("employees", JSON.stringify(employees));
 
@@ -134,16 +138,16 @@ function toggleDarkMode(){
 
 /* ---------------- LOGOUT ---------------- */
 function logout(){
-    localStorage.clear();
-    window.location.replace("index.html");
+    window.location.href = "index.html";
 }
+
 /* ---------------- CHANGE PASSWORD ---------------- */
 function changePassword(){
 
     let newPass = prompt("Enter new password:");
 
     if(newPass && newPass.trim() !== ""){
-        localStorage.setItem("password", newPass);
+        localStorage.setItem("password", newPass.trim());
         alert("Password updated successfully!");
     }
 }
