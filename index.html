@@ -6,26 +6,43 @@
     <title>Nexus One Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="login-box">
+<div class="dashboard-container">
 
-    <h1>NEXUS ONE</h1>
-    <p>Employee Management System</p>
+    <!-- HEADER -->
+    <header class="header">
 
-    <input type="email" id="email" placeholder="Enter Email">
+        <div>
+            <h1>⚡ Nexus One System</h1>
+            <p>Employee Management Portal</p>
+        </div>
 
-    <input type="password" id="password" placeholder="Enter Password">
+        <div class="header-actions">
 
-    <button onclick="login()">Login</button>
+            <span id="statusBadge">🟢 System Active</span>
 
-    <p id="message"></p>
+        </div>
+
+    </header>
+
+    <!-- LOGIN BOX -->
+    <div class="form-box" style="margin-top:50px; flex-direction:column;">
+
+        <input type="text" id="email" placeholder="Email">
+
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+
+        <p id="message" style="color:red;"></p>
+
+    </div>
 
 </div>
 
 <script src="app.js"></script>
-<script>
-window.location.href = "dashboard.html";
-</script>
+
 </body>
 </html>

@@ -1,9 +1,9 @@
 let employees = JSON.parse(localStorage.getItem("employees")) || [];
 
+/* ---------------- INIT ---------------- */
 displayEmployees();
 
 /* ---------------- LOGIN ---------------- */
-
 function login(){
 
     let email = document.getElementById("email").value;
@@ -12,39 +12,40 @@ function login(){
     let savedPassword = localStorage.getItem("password") || "123456";
 
     if(email === "admin@gmail.com" && password === savedPassword){
-
         window.location.href = "dashboard.html";
-
     }else{
-
-        document.getElementById("message").innerHTML =
-        "Invalid Email or Password";
-
+        let msg = document.getElementById("message");
+        if(msg) msg.innerHTML = "Invalid Email or Password";
     }
 }
 
-/* ---------------- EMPLOYEE CRUD ---------------- */
-
+/* ---------------- ADD EMPLOYEE ---------------- */
 function addEmployee(){
 
-    let name = document.getElementById("empName").value;
-    let dept = document.getElementById("empDept").value;
+    let name = document.getElementById("empName");
+    let dept = document.getElementById("empDept");
 
-    if(name === "" || dept === ""){
+    if(!name || !dept) return;
+
+    if(name.value === "" || dept.value === ""){
         alert("Please fill all fields");
         return;
     }
 
-    employees.push({name, dept});
+    employees.push({
+        name: name.value,
+        dept: dept.value
+    });
 
     localStorage.setItem("employees", JSON.stringify(employees));
 
-    displayEmployees();
+    name.value = "";
+    dept.value = "";
 
-    document.getElementById("empName").value = "";
-    document.getElementById("empDept").value = "";
+    displayEmployees();
 }
 
+/* ---------------- DISPLAY ---------------- */
 function displayEmployees(){
 
     let list = document.getElementById("employeeList");
@@ -53,43 +54,36 @@ function displayEmployees(){
 
     list.innerHTML = "";
 
-    employees.forEach((emp,index)=>{
+    employees.forEach((emp, index)=>{
 
         list.innerHTML += `
         <tr>
             <td>${emp.name}</td>
             <td>${emp.dept}</td>
             <td>
-
                 <button onclick="editEmployee(${index})">Edit</button>
-
-                <button class="delete-btn"
-                onclick="deleteEmployee(${index})">
-                Delete
-                </button>
-
+                <button onclick="deleteEmployee(${index})">Delete</button>
             </td>
         </tr>
         `;
     });
 
-    document.getElementById("totalEmployees").innerHTML =
-    employees.length;
+    let totalEmp = document.getElementById("totalEmployees");
+    let totalDept = document.getElementById("totalDepartments");
+    let active = document.getElementById("activeStaff");
+
+    if(totalEmp) totalEmp.innerHTML = employees.length;
 
     let departments = [...new Set(employees.map(emp => emp.dept))];
 
-    document.getElementById("totalDepartments").innerHTML =
-    departments.length;
-
-    document.getElementById("activeStaff").innerHTML =
-    employees.length;
+    if(totalDept) totalDept.innerHTML = departments.length;
+    if(active) active.innerHTML = employees.length;
 }
 
 /* ---------------- DELETE ---------------- */
-
 function deleteEmployee(index){
 
-    employees.splice(index,1);
+    employees.splice(index, 1);
 
     localStorage.setItem("employees", JSON.stringify(employees));
 
@@ -97,33 +91,26 @@ function deleteEmployee(index){
 }
 
 /* ---------------- SEARCH ---------------- */
-
 function searchEmployee(){
 
-    let input =
-    document.getElementById("search").value.toLowerCase();
+    let input = document.getElementById("search");
 
-    let rows =
-    document.querySelectorAll("#employeeList tr");
+    if(!input) return;
+
+    let filter = input.value.toLowerCase();
+
+    let rows = document.querySelectorAll("#employeeList tr");
 
     rows.forEach(row => {
 
-        let name =
-        row.children[0].textContent.toLowerCase();
+        let name = row.children[0].textContent.toLowerCase();
 
-        row.style.display =
-        name.includes(input) ? "" : "none";
+        row.style.display = name.includes(filter) ? "" : "none";
 
     });
-
 }
 
-/* ---------------- UI FEATURES ---------------- */
-
-function toggleDarkMode(){
-    document.body.classList.toggle("light-mode");
-}
-
+/* ---------------- EDIT ---------------- */
 function editEmployee(index){
 
     let newName = prompt("Enter new employee name");
@@ -131,10 +118,8 @@ function editEmployee(index){
 
     if(newName && newDept){
 
-        employees[index] = {
-            name: newName,
-            dept: newDept
-        };
+        employees[index].name = newName;
+        employees[index].dept = newDept;
 
         localStorage.setItem("employees", JSON.stringify(employees));
 
@@ -142,15 +127,22 @@ function editEmployee(index){
     }
 }
 
-function logout(){
-    window.location.href = "index.html";
+/* ---------------- DARK MODE ---------------- */
+function toggleDarkMode(){
+    document.body.classList.toggle("light-mode");
 }
 
+/* ---------------- LOGOUT ---------------- */
+function logout(){
+    localStorage.clear();
+    window.location.replace("index.html");
+}
+/* ---------------- CHANGE PASSWORD ---------------- */
 function changePassword(){
 
     let newPass = prompt("Enter new password:");
 
-    if(newPass){
+    if(newPass && newPass.trim() !== ""){
         localStorage.setItem("password", newPass);
         alert("Password updated successfully!");
     }
